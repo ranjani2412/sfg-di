@@ -2,10 +2,15 @@ package guru.springframework.sfgdi;
 
 import guru.springframework.sfgdi.beans.FakeDataSource;
 import guru.springframework.sfgdi.beans.FakeJmsSourceData;
+import guru.springframework.sfgdi.configuration.MailConfig;
 import guru.springframework.sfgdi.controllers.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
+
+import java.util.List;
 
 @SpringBootApplication
 public class SfgDiApplication {
@@ -43,6 +48,12 @@ public class SfgDiApplication {
 
 		FakeJmsSourceData fjs = ctx.getBean(FakeJmsSourceData.class);
 		System.out.println("Property JMS username : " + fjs.getUser());
+
+		MailConfig mailConfig = ctx.getBean(MailConfig.class);
+		System.out.println("Mail properties : "+mailConfig.getPort());
+
+		Environment env = ctx.getBean(Environment.class);
+		System.out.println("Application properties : "+env.getProperty("spring.profiles.active"));
 	}
 
 }

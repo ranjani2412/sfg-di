@@ -10,6 +10,8 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 
+import java.util.List;
+
 @Configuration
 //@PropertySource("classpath:datasource.properties")
 @PropertySources({
@@ -34,6 +36,9 @@ public class PropertyConfig {
 
     @Value("${guru.jms.url}")
     private String jmsUrl;
+
+    @Value("${spring.profiles.active}")
+    private List<String> profile;
 
     private Environment environment;
 
@@ -61,6 +66,11 @@ public class PropertyConfig {
         sourceData.setPassword(jmsPassword);
         sourceData.setUrl(jmsUrl);
         return sourceData;
+    }
+
+    @Bean
+    MailConfig mailConfig() {
+        return new MailConfig();
     }
 
    /* @Bean
